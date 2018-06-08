@@ -65,6 +65,5 @@ trafaret==1.0.2
 traitlets==4.3.2
 urllib3==1.22
 wcwidth==0.1.7
-websocket==0.2.1
 websocket-client==0.47.0
 Werkzeug==0.13
