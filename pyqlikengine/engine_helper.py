@@ -69,3 +69,5 @@ def getDataFrame(connection, appHandle, measures, dimensions, selections={}):
                 j += 1
             
             i += 1
+
+    return df
