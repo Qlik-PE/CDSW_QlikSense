@@ -10,7 +10,7 @@ import engine_field_api
 host = "cloudera.qlik.com"
 proxyPrefix = "jupyter"
 userDirectory = "CLOUDERA"
-userId = "user_1"
+userId = "QlikService"
 privateKey = "./private.key"
 
 conn = SecureEngineCommunicator(host, proxyPrefix, userDirectory, userId, privateKey)
