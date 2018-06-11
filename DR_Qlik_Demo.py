@@ -8,6 +8,8 @@ import pandas as pd
 import requests, sys
 from pyqlikengine import instantiate_helper as helper
 from pyqlikengine import engine_helper as pyqlikhelper
+%matplotlib inline
+import matplotlib.pyplot as plt
 
 ### Get a list of apps
 apps = helper.ega.get_doc_list()
@@ -17,7 +19,8 @@ for app in apps:
     print (app['qTitle']+'-'+app['qDocId'])
 
 ### Open desired app in Qlik
-opened_app = helper.ega.open_doc('de1eb0ac-7c1c-406d-a9b6-4fde5d201183') ##Price History App
+opened_app = helper.ega.open_doc('de1eb0ac-7c1c-406d-a9b6-4fde5d201183') 
+##Price History App
 app_handle = helper.ega.get_handle(opened_app)
 
 ### Build a dataframe of features from Qlik and make selection of id of interest, per end user request
@@ -28,6 +31,7 @@ df = pyqlikhelper.getDataFrame(helper.conn, app_handle, measures, dimensions, se
 df
 
 ### Format for Datarobot friendliness
+row = df #test_data.loc[[0]]
 row_json = df.to_json(orient='records')
 print row_json
 
@@ -100,6 +104,7 @@ table = pd.DataFrame({'price': rows.renewal_price,
 
 ### Compute optimal price
 table['profitability'] = table.conversion * (table.price*(table.loss*1.2) - table.loss)/100.
+table.index.name = 'recno'
 best_i = table.profitability.argmax()
 print 'Optimal price: %.3f' % ((table.price.iloc[best_i] * table.loss.iloc[best_i])*1.2/100.)
 print 'Expected conversion: %.3f \n' % table.conversion.iloc[best_i]
@@ -120,3 +125,52 @@ axes = fig.add_subplot(1, 1, 1, facecolor=dr_dark_blue)
 
 plt.scatter(table.price, table.profitability, color=dr_green)
 plt.plot(table.price, table.profitability, color=dr_green)
+
+### Send Result to Qlik Sense
+import requests
+import json
+
+dockermgr_ip='172.31.23.134'
+dockermanager_port='12345'
+
+containercreate_resp = requests.get('http://'+dockermgr_ip+':'+dockermanager_port+'/createstartContainer',
+                         auth=('user', 'password'))
+
+containercreate_resp.text
+
+listcontainers_resp = requests.get('http://'+dockermgr_ip+':'+dockermanager_port+'/listContainers',
+                         auth=('user', 'password'))
+
+
+
+container_data = json.loads(listcontainers_resp.text)
+print 'number of containers: '+str(len(container_data))
+
+created_container_port = container_data[0]['Ports'][1]['PrivatePort']
+
+for i in container_data:
+    print format(i['Names'])+' *** '+format(i['Ports'])+' *** '+format(i['Image'])
+
+    
+## Test Qlik Engine REST endpoint
+helloengine_resp = requests.get(
+  'http://'+dockermgr_ip+':'+dockermanager_port+'/hello_engine/'
+  +str(created_container_port)
+  ,auth=('user', 'password')
+)
+
+print helloengine_resp.text
+
+### Export data from "table" output, which is the conversion data we will send to Qlik
+
+import csv
+import io
+
+data_export = table.to_csv()
+
+## Test Qlik Engine send data into app
+helloengine_resp = requests.post(
+  'http://'+dockermgr_ip+':'+dockermanager_port+'/send_data/'
+  +str(created_container_port),data = data_export)
+
+requests.post('http://httpbin.org/post', data = {'key':'value'})
