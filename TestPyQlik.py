@@ -13,10 +13,10 @@ import pyqlikengine.engine_generic_object_api
 import pyqlikengine.engine_field_api
 import pyqlikengine.structs
 
-host = "cloudera.qlik.com"
-proxyPrefix = "jupyter"
-userDirectory = "CLOUDERA"
-userId = "user_1"
+host = "sense.cloudera.qlik.com"
+proxyPrefix = "jwt"
+userDirectory = "SENSE.CLOUDERA.QLIK.COM"
+userId = "qlikservice"
 privateKey = "./private.key"
 
 conn = SecureEngineCommunicator(host, proxyPrefix, userDirectory, userId, privateKey)
