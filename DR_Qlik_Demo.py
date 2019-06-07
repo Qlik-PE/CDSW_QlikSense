@@ -16,7 +16,7 @@ apps = helper.ega.get_doc_list()
 
 ### List Apps available (identify the App GUID to open)
 for app in apps:
-    print (app['qTitle']+'-'+app['qDocId'])
+    print(app['qTitle']+'-'+app['qDocId'])
 
 ### Open desired app in Qlik
 opened_app = helper.ega.open_doc('2aee2dca-baa6-4010-820a-2f4cea439356') 
@@ -33,7 +33,7 @@ df
 ### Format for Datarobot friendliness
 row = df #test_data.loc[[0]]
 row_json = df.to_json(orient='records')
-print row_json
+print(row_json)
 
 ### Datarobot model id's
 loss_model_id = "5ad4d867c2674e17de32822a"
@@ -75,7 +75,7 @@ output = predict_API_call(host=prediction_host,
                          project_id=loss_project_id,
                          data=row_json,
                          classif=False)
-print 'Expected Loss: %.3f' % output[0]
+print('Expected Loss: %.3f' % output[0])
 
 ### Add expected loss into the data
 row[u'predicted_loss'] = output[0]
@@ -106,9 +106,9 @@ table = pd.DataFrame({'price': rows.renewal_price,
 table['profitability'] = table.conversion * (table.price*(table.loss*1.2) - table.loss)/100.
 table.index.name = 'recno'
 best_i = table.profitability.argmax()
-print 'Optimal price: %.3f' % ((table.price.iloc[best_i] * table.loss.iloc[best_i])*1.2/100.)
-print 'Expected conversion: %.3f \n' % table.conversion.iloc[best_i]
-print table
+print('Optimal price: %.3f' % ((table.price.iloc[best_i] * table.loss.iloc[best_i])*1.2/100.))
+print('Expected conversion: %.3f \n' % table.conversion.iloc[best_i])
+print(table)
 
 ### Visualization
 
