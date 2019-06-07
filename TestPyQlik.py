@@ -31,7 +31,7 @@ apps = ega.get_doc_list()
 
 ### List Apps available (identify the App GUID to open)
 for app in apps:
-    print app['qTitle']
+    print(app['qTitle'])
     
 ### Connect to desired app    
 opened_app = ega.open_doc('2aee2dca-baa6-4010-820a-2f4cea439356') ##Executive Dashboard
@@ -72,7 +72,7 @@ hc_data = egoa.get_hypercube_data(hc_handle, "/qHyperCubeDef", [nx_page])
 
 elems = hc_data["qDataPages"][0]['qMatrix']
 
-print elems
+print(elems)
 
 dim1_list = []
 dim2_list = []
