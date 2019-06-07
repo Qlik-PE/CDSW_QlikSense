@@ -23,6 +23,10 @@ Modify the default files to get started with your own project.
 
 Note: the runnable example uses Price Optimization.qvf which is loaded on sense.cloudera.qlik.com. It is also included in this repo.
 
+Note2: Setting up JWT can be a pain, in my opinion this is best resource:
+
+https://github.com/goldbergjeffrey/qs-jwt-examples/blob/master/docs/vpconfig.md
+
 ## Roadmap
 
 * More Helper functions to simplify code
