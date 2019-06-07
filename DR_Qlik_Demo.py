@@ -19,7 +19,7 @@ for app in apps:
     print (app['qTitle']+'-'+app['qDocId'])
 
 ### Open desired app in Qlik
-opened_app = helper.ega.open_doc('de1eb0ac-7c1c-406d-a9b6-4fde5d201183') 
+opened_app = helper.ega.open_doc('2aee2dca-baa6-4010-820a-2f4cea439356') 
 ##Price History App
 app_handle = helper.ega.get_handle(opened_app)
 
