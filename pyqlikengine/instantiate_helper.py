@@ -7,11 +7,11 @@ from engine_field_api import *
 import engine_field_api
 # from engine_communicator import SecureEngineCommunicator
 
-host = "cloudera.qlik.com"
-proxyPrefix = "jupyter"
+host = "sense.cloudera.qlik.com"
+proxyPrefix = "jwt"
 userDirectory = "CLOUDERA"
-userId = "QlikService"
-privateKey = "./private.key"
+userId = "qlikservice"
+privateKey = "../private.key"
 
 conn = SecureEngineCommunicator(host, proxyPrefix, userDirectory, userId, privateKey)
 efa = engine_field_api.EngineFieldApi(conn)
