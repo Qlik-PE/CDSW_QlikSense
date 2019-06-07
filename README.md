@@ -21,6 +21,8 @@ Modify the default files to get started with your own project.
 * Upon entering the TestPyQlik.py script in the Workbench, the first thing you will need to do is install the required packages. You can do this by selecting the top portion of the TestPyQlik.py script - "!pip install -r requirements.txt", and right click and choose "Run Line(s)"
 * Code will be displayed, and you will have an option to run the code.. On the menu bar just above the code, click on the black play symbol to run all of the code at one time. If you want to simply run sections of the code, you can select a section, right click, and choose "Run Line(s)"
 
+Note: the runnable example uses Price Optimization.qvf which is loaded on sense.cloudera.qlik.com. It is also included in this repo.
+
 ## Roadmap
 
 * More Helper functions to simplify code
